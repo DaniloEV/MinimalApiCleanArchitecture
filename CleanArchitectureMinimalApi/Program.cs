@@ -3,6 +3,7 @@ using Infrastructure;
 using Application;
 using CleanArchitectureMinimalApi;
 using CleanArchitectureMinimalApi.Extensions;
+using Asp.Versioning.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,14 +21,28 @@ builder.Services
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
-app.MapEndpoints();
+
+#region versioning, después del dependencyInjection
+ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(new Asp.Versioning.ApiVersion(1))
+    .HasApiVersion(new Asp.Versioning.ApiVersion(2))
+    .ReportApiVersions()
+    .Build();
+
+RouteGroupBuilder versionGroup = app.
+    MapGroup("api/v{apiVersion:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+//vamos a los endpoints para configurar cual versión va a utilizar cada uno
+#endregion
+//MapEndpoints ya venía con ello en caso de necesitarlo
+app.MapEndpoints(versionGroup);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerWithUi();
-
     app.MapOpenApi();
 }
+ 
 
 app.UseHttpsRedirection();
 

@@ -25,7 +25,7 @@ namespace CleanArchitectureMinimalApi.Extensions
             RouteGroupBuilder? routeGroupBuilder = null)
         {
             IEnumerable<IEndpoint> endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
-
+            //en caso de no venir el RouteGroupBuilder utiliza el default
             IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
 
             foreach (IEndpoint endpoint in endpoints)
