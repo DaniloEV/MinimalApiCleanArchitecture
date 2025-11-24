@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Application.Todos.Get
 {
-    internal sealed class GetTodosQueryHandler()
+    internal sealed class GetTodosQueryHandler(
+             IMapper _mapper
+        )
         : IQueryHandler<GetTodosQuery, List<TodoResponse>>
     {
         public async Task<Result<List<TodoResponse>>> Handle(GetTodosQuery query, CancellationToken cancellationToken)
@@ -18,7 +21,7 @@ namespace Application.Todos.Get
             //{
             //    return Result.Failure<List<TodoResponse>>(UserErrors.Unauthorized());
             //}
-
+         
             //List<TodoResponse> todos = await context.TodoItems
             //    .Where(todoItem => todoItem.UserId == query.UserId)
             //    .Select(todoItem => new TodoResponse
@@ -34,6 +37,7 @@ namespace Application.Todos.Get
             //    })
             //    .ToListAsync(cancellationToken);
             List<TodoResponse> todos =  new List<TodoResponse>();
+            var a = _mapper.Map<List<TodoResponseDto>>(todos);
             return todos;
         }
     }

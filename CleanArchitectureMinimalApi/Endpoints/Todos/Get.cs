@@ -20,8 +20,11 @@ namespace CleanArchitectureMinimalApi.Endpoints.Todos
                     CancellationToken cancellationToken) =>
                 {
 
-                    var query = new GetTodosQuery(Guid.Parse("12020dc1-734b-4e3a-8dbf-654cbe770d2d"));
 
+
+
+
+                    var query = new GetTodosQuery(Guid.Parse("12020dc1-734b-4e3a-8dbf-654cbe770d2d"));
                     Result<List<TodoResponse>> result = await handler.Handle(query, cancellationToken);
 
                     return result.Match(Results.Ok, CustomResults.Problem);

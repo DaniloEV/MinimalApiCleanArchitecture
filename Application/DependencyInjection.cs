@@ -36,6 +36,14 @@ namespace Application
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
+
+            // Configure AutoMapper
+            services.AddAutoMapper(configuration =>
+            {
+
+            }, typeof(DependencyInjection));
+
+
             return services;
         }
     }

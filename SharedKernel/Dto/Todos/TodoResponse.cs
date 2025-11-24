@@ -11,4 +11,10 @@ namespace SharedKernel.Dto.Todos
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
     }
+
+    public sealed class TodoResponseDto
+    {
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+    }
 }
